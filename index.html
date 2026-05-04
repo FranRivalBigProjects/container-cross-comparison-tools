@@ -1,121 +1,1071 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="PkLa_ViOo6FAHpvh8SacceMb95o9tePRdrqLNBz9X1M" />
+<meta name="robots" content="index, follow">
 
-    <!-- 🔐 Google Site Verification -->
-    <meta name="google-site-verification" content="PkLa_ViOo6FAHpvh8SacceMb95o9tePRdrqLNBz9X1M" />
+<title>Container Orchestration Comparison – Kubernetes vs Docker Swarm vs Nomad vs ECS (2025)</title>
 
-    <!-- SEO Potenciado -->
-    <title>Container Comparison Tools – Docker, Kubernetes, Podman & Helm</title>
+<meta name="description" content="Interactive container orchestration comparison 2025. Compare Kubernetes, Docker Swarm, Nomad, Amazon ECS, OpenShift, k3s, and Rancher on scalability, complexity, cost, security, and performance. Best container platform for your use case.">
 
-    <meta name="description" content="Compare container technologies like Docker, Kubernetes, Podman, Helm, and Kustomize. Analyze performance, scalability, and DevOps workflows.">
+<meta name="keywords" content="container orchestration comparison, container platform comparison, docker orchestration tools comparison, kubernetes vs docker swarm, kubernetes vs nomad, kubernetes alternatives, container orchestration tools, k3s vs kubernetes, ecs vs kubernetes, openshift vs kubernetes">
 
-    <meta name="keywords" content="
-    docker vs podman,
-    kubernetes vs serverless,
-    k8s vs docker swarm,
-    helm vs kustomize,
-    containerd vs docker,
-    container comparison tools,
-    kubernetes comparison tools,
-    devops container tools,
-    container orchestration comparison,
-    container performance comparison
-    ">
+<link rel="canonical" href="https://franrivalbigprojects.github.io/container-comparison-tools/">
 
-    <meta name="author" content="AI Tools Suite">
+<meta property="og:title" content="Container Orchestration Comparison 2025 – Kubernetes vs Docker Swarm vs Nomad vs ECS">
+<meta property="og:description" content="Compare container orchestration platforms on scalability, complexity, cost, and security. Interactive tool with benchmarks.">
+<meta property="og:type" content="website">
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="Container Comparison Tools – Docker, Kubernetes & More">
-    <meta property="og:description" content="Compare container platforms and orchestration tools.">
-    <meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Estilos -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background: #020617;
-            color: #e2e8f0;
-        }
-        h1 {
-            color: #38bdf8;
-        }
-        p {
-            max-width: 950px;
-            line-height: 1.6;
-        }
-        .tools {
-            margin-top: 30px;
-        }
-        .tool {
-            margin-bottom: 14px;
-            padding: 14px;
-            background: #1e293b;
-            border-radius: 10px;
-            transition: 0.2s;
-        }
-        .tool:hover {
-            background: #334155;
-        }
-        a {
-            text-decoration: none;
-            color: #22c55e;
-            font-weight: bold;
-            font-size: 15px;
-        }
-        small {
-            display: block;
-            margin-top: 5px;
-            color: #94a3b8;
-        }
-    </style>
+<style>
+:root {
+  --bg: #040810;
+  --surface: #070d1c;
+  --surface2: #0c1430;
+  --border: #101e38;
+  --border2: #162848;
+  --con: #38bdf8;
+  --con-dim: rgba(56,189,248,0.12);
+  --con-dim2: rgba(56,189,248,0.05);
+  --con-glow: rgba(56,189,248,0.18);
+  --k8s: #326ce5;
+  --swarm: #0db7ed;
+  --nomad: #00ca8e;
+  --ecs: #ff9900;
+  --os: #ee0000;
+  --k3s: #ffd700;
+  --rancher: #0075a8;
+  --compose: #1d63ed;
+  --green: #22c55e;
+  --green-dim2: rgba(34,197,94,0.05);
+  --red: #f87171;
+  --orange: #fb923c;
+  --orange-dim: rgba(251,146,60,0.08);
+  --yellow: #fbbf24;
+  --yellow-dim: rgba(251,191,36,0.08);
+  --text: #b0c8e8;
+  --text-muted: #3a5070;
+  --text-dim: #0f1e38;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Inter', sans-serif;
+  --r: 8px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 44px 44px;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+header {
+  border-bottom: 1px solid var(--border2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(4,8,16,0.97);
+  backdrop-filter: blur(12px);
+}
+
+.header-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.logo-pill {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--con);
+  background: var(--con-dim2);
+  border: 1px solid rgba(56,189,248,0.3);
+  border-radius: 3px;
+  padding: 3px 9px;
+}
+
+.logo-text { font-family: var(--mono); font-size: 12px; color: var(--text-muted); }
+.logo-text strong { color: var(--con); font-weight: 500; }
+
+.wrapper {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  padding: 44px 0 24px;
+  border-bottom: 1px solid var(--border2);
+  margin-bottom: 22px;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--con);
+  margin-bottom: 12px;
+  opacity: 0.8;
+}
+
+h1 {
+  font-size: clamp(20px, 2.8vw, 28px);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+h1 em { font-style: normal; color: var(--con); }
+
+.hero-sub {
+  font-size: 15px;
+  color: var(--text-muted);
+  max-width: 660px;
+  line-height: 1.75;
+  margin-bottom: 14px;
+}
+
+.hero-sub strong { color: var(--text); }
+
+/* USE-CASE FINDER */
+.finder-shell {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.finder-topbar {
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border2);
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.topbar-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.finder-body { padding: 16px 18px; }
+
+.finder-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.field { display: flex; flex-direction: column; gap: 5px; }
+
+.field-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.con-select {
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text);
+  width: 100%;
+  -webkit-appearance: none;
+  transition: border-color 0.2s;
+}
+
+.con-select:focus { outline: none; border-color: rgba(56,189,248,0.35); }
+.con-select option { background: #0c1430; }
+
+.btn-find {
+  padding: 10px 22px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--con);
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 0 12px var(--con-glow);
+  transition: opacity 0.15s;
+  margin-bottom: 14px;
+}
+.btn-find:hover { opacity: 0.87; }
+
+.rec-box {
+  display: none;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-left: 3px solid var(--con);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.rec-box.show { display: block; }
+.rec-winner { color: var(--con); font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.rec-body { color: var(--text-muted); }
+.rec-also { color: var(--text-dim); margin-top: 6px; font-size: 11px; }
+
+/* FILTER BAR */
+.filter-shell {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.filter-row {
+  display: flex;
+  gap: 5px;
+  padding: 10px 18px;
+  flex-wrap: wrap;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border2);
+}
+
+.filter-btn {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 5px 12px;
+  border-radius: 3px;
+  border: 1px solid var(--border2);
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-muted);
+  transition: all 0.15s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.filter-btn:hover { border-color: var(--con); color: var(--text); }
+.filter-btn.active { border-color: var(--con); background: var(--con-dim2); color: var(--con); }
+
+/* TABLE */
+.cmp-wrap { overflow-x: auto; }
+
+.cmp-table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+.cmp-table th {
+  background: var(--surface2);
+  padding: 9px 12px;
+  text-align: left;
+  border-bottom: 2px solid var(--border2);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+}
+
+.cmp-table th.th-tool { color: var(--con); width: 130px; }
+
+.cmp-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border2);
+  vertical-align: top;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.cmp-table tr:last-child td { border-bottom: none; }
+.cmp-table tr:hover td { background: rgba(56,189,248,0.02); }
+
+.tool-cell {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.t-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.t-name { font-weight: 600; font-size: 12px; }
+
+.badge {
+  font-size: 9px;
+  padding: 1px 7px;
+  border-radius: 2px;
+  border: 1px solid;
+  white-space: nowrap;
+}
+
+.b-top  { color: var(--green);  background: rgba(34,197,94,0.07); border-color: rgba(34,197,94,0.2); }
+.b-good { color: var(--con);    background: var(--con-dim2);      border-color: rgba(56,189,248,0.2); }
+.b-mid  { color: var(--yellow); background: var(--yellow-dim);    border-color: rgba(251,191,36,0.2); }
+.b-hard { color: var(--orange); background: var(--orange-dim);    border-color: rgba(251,146,60,0.2); }
+.b-no   { color: var(--red);    background: rgba(248,113,113,0.07); border-color: rgba(248,113,113,0.2); }
+
+/* BENCHMARKS */
+.bench-shell {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.bench-tabs {
+  display: flex;
+  gap: 5px;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--border2);
+  background: var(--bg);
+  flex-wrap: wrap;
+}
+
+.bench-tab {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 4px 12px;
+  border-radius: 3px;
+  border: 1px solid var(--border2);
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-muted);
+  transition: all 0.15s;
+  text-transform: uppercase;
+}
+
+.bench-tab:hover { border-color: var(--con); color: var(--text); }
+.bench-tab.active { border-color: var(--con); background: var(--con-dim2); color: var(--con); }
+
+.bench-body { padding: 18px 20px; }
+
+.bench-item { margin-bottom: 12px; }
+.bench-item:last-child { margin-bottom: 0; }
+
+.bench-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.bench-name { font-family: var(--mono); font-size: 12px; font-weight: 600; }
+.bench-val  { font-family: var(--mono); font-size: 11px; color: var(--text-muted); }
+
+.bench-track {
+  width: 100%;
+  height: 10px;
+  background: var(--border2);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.bench-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.8s ease;
+}
+
+/* SECTION */
+hr.divider { border: none; border-top: 1px solid var(--border2); margin: 50px 0; }
+.content-section { margin-bottom: 50px; }
+
+.sec-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.sec-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--con);
+  white-space: nowrap;
+  opacity: 0.7;
+}
+
+.sec-rule { flex: 1; height: 1px; background: var(--border2); }
+
+p { font-size: 14px; color: var(--text-muted); line-height: 1.8; margin-bottom: 10px; max-width: 820px; }
+p strong { color: var(--text); }
+
+code {
+  font-family: var(--mono);
+  font-size: 12px;
+  background: var(--surface2);
+  color: var(--con);
+  padding: 2px 7px;
+  border-radius: 3px;
+  border: 1px solid var(--border2);
+}
+
+.dense-block {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  padding: 22px;
+  margin-top: 14px;
+}
+
+.dense-block p { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--border2); max-width: none; }
+.dense-block p:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+
+.faq-list { margin-top: 14px; border: 1px solid var(--border2); border-radius: var(--r); overflow: hidden; }
+.faq-item { border-bottom: 1px solid var(--border2); }
+.faq-item:last-child { border-bottom: none; }
+
+.faq-q {
+  width: 100%;
+  text-align: left;
+  background: var(--surface);
+  border: none;
+  padding: 13px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  font-family: var(--sans);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  transition: background 0.15s;
+}
+
+.faq-q:hover { background: var(--con-dim2); }
+.faq-arrow { font-family: var(--mono); font-size: 11px; color: var(--text-dim); transition: transform 0.2s; flex-shrink: 0; }
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+
+.faq-a {
+  display: none;
+  padding: 0 18px 14px;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.75;
+  border-top: 1px solid var(--border2);
+  background: var(--bg);
+}
+
+.faq-item.open .faq-a { display: block; }
+.faq-a code { color: var(--con); background: var(--con-dim2); }
+
+.subtools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.stl {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  padding: 12px 14px;
+  text-decoration: none;
+  display: block;
+  transition: border-color 0.15s;
+}
+
+.stl:hover { border-color: rgba(56,189,248,0.3); }
+.stl-eye  { font-family: var(--mono); font-size: 9px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
+.stl-name { font-family: var(--mono); font-size: 12px; color: var(--con); font-weight: 500; }
+
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 50px; }
+.tag {
+  font-family: var(--mono); font-size: 10px; color: var(--text-muted);
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: 100px; padding: 4px 12px; cursor: default;
+}
+.tag:hover { color: var(--con); border-color: rgba(56,189,248,0.3); }
+
+footer { border-top: 1px solid var(--border2); padding: 20px 0; position: relative; z-index: 1; }
+.footer-inner {
+  max-width: 1160px; margin: 0 auto; padding: 0 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 8px;
+}
+footer p { font-family: var(--mono); font-size: 11px; color: var(--text-dim); margin: 0; }
+
+@media (max-width: 640px) {
+  .finder-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"Container Orchestration Comparison 2025","description":"Interactive comparison of container orchestration platforms: Kubernetes, Docker Swarm, Nomad, Amazon ECS, OpenShift, k3s, Rancher, Docker Compose. Filter by scalability, complexity, cost, security, and use case.","keywords":"container orchestration comparison, container platform comparison, docker orchestration tools comparison, kubernetes vs docker swarm, kubernetes vs nomad"}
+</script>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the best container orchestration tool in 2025?","acceptedAnswer":{"@type":"Answer","text":"The best container orchestration tool depends on your use case: Kubernetes is the industry standard for production, large-scale microservices — best scalability and ecosystem. k3s is Kubernetes for edge and resource-constrained environments. Docker Swarm is simplest for small teams familiar with Docker Compose. HashiCorp Nomad is best for heterogeneous workloads (containers + VMs + binaries). Amazon ECS is best if you're all-in on AWS. OpenShift (Red Hat) is best for enterprise with compliance requirements. For a single developer or small team: Docker Compose locally, then k3s or ECS for production."}},{"@type":"Question","name":"Kubernetes vs Docker Swarm — which should I choose?","acceptedAnswer":{"@type":"Answer","text":"Choose Kubernetes if: you need production-grade scalability, have a DevOps team, run microservices at scale, or need advanced features (horizontal pod autoscaling, RBAC, network policies, Helm). Choose Docker Swarm if: you already use Docker Compose, have a small team, want simpler ops, or run a small to medium application. Swarm uses familiar docker-compose.yml syntax and has a minimal learning curve. Kubernetes has a much steeper learning curve but is more powerful and has a larger ecosystem."}}]}
+</script>
+
 </head>
+
 <body>
+<header>
+  <div class="header-inner">
+    <span class="logo-pill">Container</span>
+    <span class="logo-text"><strong>orchestration</strong>-comparison &middot; 2025</span>
+  </div>
+</header>
 
-    <h1>Container Comparison Tools</h1>
+<div class="wrapper">
 
-    <p>
-        Compare modern container technologies and orchestration platforms such as Docker,
-        Kubernetes, Podman, and Helm. Analyze performance, scalability, and workflow differences
-        to choose the best solution for your infrastructure.
+  <section class="hero">
+    <p class="hero-eyebrow">// Container Orchestration 2025</p>
+    <h1><em>Container Orchestration</em> Comparison —<br>Kubernetes vs Swarm vs Nomad vs ECS</h1>
+    <p class="hero-sub">
+      Compare <strong>8 container orchestration platforms</strong> by scalability, complexity, cost, security, and use case. Use the finder to get a recommendation for your situation.
     </p>
+  </section>
 
-    <p>
-        These tools help DevOps engineers and developers evaluate trade-offs between container
-        runtimes, orchestration systems, and deployment strategies.
-    </p>
+  <!-- USE-CASE FINDER -->
 
-    <div class="tools">
-
-        <div class="tool">
-            <a href="containerd-vs-docker/">containerd vs Docker</a>
-            <small>Compare container runtimes and performance.</small>
-        </div>
-
-        <div class="tool">
-            <a href="helm-vs-kustomize/">Helm vs Kustomize</a>
-            <small>Compare Kubernetes configuration management tools.</small>
-        </div>
-
-        <div class="tool">
-            <a href="k8s-vs-serverless/">Kubernetes vs Serverless</a>
-            <small>Compare orchestration vs serverless architectures.</small>
-        </div>
-
-        <div class="tool">
-            <a href="k8s-vs-swarm/">Kubernetes vs Docker Swarm</a>
-            <small>Compare container orchestration platforms.</small>
-        </div>
-
-        <div class="tool">
-            <a href="podman-vs-docker/">Podman vs Docker</a>
-            <small>Compare container engines and workflows.</small>
-        </div>
-
+  <div class="finder-shell">
+    <div class="finder-topbar">
+      <span class="topbar-label">// Orchestration Platform Finder</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--text-dim);">answer 3 questions → get a recommendation</span>
     </div>
+    <div class="finder-body">
+      <div class="finder-grid">
+        <div class="field">
+          <label class="field-label">Team size</label>
+          <select class="con-select" id="teamSel">
+            <option value="solo">Solo / 1-2 devs</option>
+            <option value="small">Small team (3-10)</option>
+            <option value="medium">Medium team (10-50)</option>
+            <option value="large">Large org (50+)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label">Scale / workload</label>
+          <select class="con-select" id="scaleSel">
+            <option value="tiny">Few containers (1-10)</option>
+            <option value="small">Small (10-50 services)</option>
+            <option value="medium">Medium (50-200 services)</option>
+            <option value="large">Large scale (200+ services)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label">Priority</label>
+          <select class="con-select" id="prioritySel">
+            <option value="simplicity">Simplicity / low ops overhead</option>
+            <option value="scalability">Maximum scalability</option>
+            <option value="cost">Lowest cost</option>
+            <option value="aws">AWS-native integration</option>
+            <option value="enterprise">Enterprise compliance</option>
+            <option value="edge">Edge / IoT / bare metal</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-find" id="findBtn">Find Best Platform</button>
+      <div class="rec-box" id="recBox">
+        <div class="rec-winner" id="recWinner"></div>
+        <div class="rec-body" id="recBody"></div>
+        <div class="rec-also" id="recAlso"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARISON TABLE -->
+
+  <div class="filter-shell">
+    <div class="finder-topbar">
+      <span class="topbar-label">// Interactive Comparison Table</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--text-dim);">2025 · 8 platforms</span>
+    </div>
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="filterTable('all',this)">All</button>
+      <button class="filter-btn" onclick="filterTable('scalability',this)">Scalability</button>
+      <button class="filter-btn" onclick="filterTable('complexity',this)">Complexity</button>
+      <button class="filter-btn" onclick="filterTable('cost',this)">Cost</button>
+      <button class="filter-btn" onclick="filterTable('security',this)">Security</button>
+      <button class="filter-btn" onclick="filterTable('ha',this)">HA / Reliability</button>
+      <button class="filter-btn" onclick="filterTable('ecosystem',this)">Ecosystem</button>
+    </div>
+    <div class="cmp-wrap">
+      <table class="cmp-table">
+        <thead>
+          <tr>
+            <th class="th-tool">Platform</th>
+            <th data-cat="scalability">Scalability</th>
+            <th data-cat="complexity">Complexity</th>
+            <th data-cat="cost">Cost</th>
+            <th data-cat="security">Security</th>
+            <th data-cat="ha">HA / Reliability</th>
+            <th data-cat="ecosystem">Ecosystem</th>
+          </tr>
+        </thead>
+        <tbody id="cmpBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- BENCHMARKS -->
+
+  <div class="bench-shell">
+    <div class="finder-topbar">
+      <span class="topbar-label">// Performance &amp; Complexity Benchmarks</span>
+    </div>
+    <div class="bench-tabs">
+      <button class="bench-tab active" onclick="showBench('startup',this)">Startup Time (min)</button>
+      <button class="bench-tab" onclick="showBench('overhead',this)">Resource Overhead (MB RAM)</button>
+      <button class="bench-tab" onclick="showBench('scale',this)">Max Practical Scale (nodes)</button>
+      <button class="bench-tab" onclick="showBench('learning',this)">Learning Curve (weeks)</button>
+    </div>
+    <div class="bench-body" id="benchBody"></div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- GUIDE -->
+
+  <section class="content-section">
+    <div class="sec-head">
+      <span class="sec-label">When to use each platform</span>
+      <span class="sec-rule"></span>
+    </div>
+    <div class="dense-block">
+      <p><strong>Kubernetes — the production standard, but complex</strong><br>
+      Use Kubernetes when: you have 50+ containers, need horizontal pod autoscaling, require fine-grained RBAC, use Helm charts from the ecosystem, or need network policies. Managed options (EKS, GKE, AKS) reduce operational burden. Learning curve: 4-8 weeks to be productive, 6-12 months to master. Cost: the managed control plane on EKS costs $0.10/hr ($72/month) plus worker nodes. Not worth it for small apps — Docker Compose or Swarm handle small workloads with a fraction of the complexity.</p>
+      <p><strong>Docker Swarm — easiest migration from Compose</strong><br>
+      Swarm uses almost identical syntax to Docker Compose — a docker-compose.yml deploys to Swarm with minimal changes. Built into Docker since 1.12. Zero additional software to install. Limitations: no horizontal pod autoscaling, limited networking compared to Kubernetes, smaller ecosystem, fewer managed options. Best for: teams running 10-50 services, already familiar with Docker Compose, needing clustering without learning Kubernetes. Many teams find Swarm sufficient for years before needing Kubernetes.</p>
+      <p><strong>HashiCorp Nomad — best for heterogeneous workloads</strong><br>
+      Nomad orchestrates not just containers but also raw executables, Java JARs, and VMs in the same cluster — unique among orchestrators. Simpler than Kubernetes (single binary, no etcd complexity). Integrates natively with Consul (service mesh) and Vault (secrets). Best for: organizations already using HashiCorp stack, mixed container/non-container workloads, bare metal or multi-cloud without vendor lock-in. Steeper than Swarm but simpler than full Kubernetes.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+
+  <section class="content-section">
+    <div class="sec-head">
+      <span class="sec-label">FAQ — container orchestration comparison</span>
+      <span class="sec-rule"></span>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What is the best container orchestration tool in 2025?<span class="faq-arrow">&#9660;</span></button>
+        <div class="faq-a"><strong>Kubernetes</strong> — industry standard, best for large-scale microservices production. <strong>k3s</strong> — Kubernetes for edge, IoT, and resource-constrained environments (Raspberry Pi). <strong>Docker Swarm</strong> — simplest, best for small teams already on Docker Compose. <strong>Nomad</strong> — best for mixed container/non-container workloads. <strong>Amazon ECS</strong> — best for AWS-native teams, simpler than EKS. <strong>OpenShift</strong> — enterprise Kubernetes with compliance, RBAC, built-in CI/CD. Use the finder above for a personalized recommendation.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Kubernetes vs Docker Swarm — which should I choose?<span class="faq-arrow">&#9660;</span></button>
+        <div class="faq-a"><strong>Choose Kubernetes</strong> if: large scale (50+ services), need HPA, complex networking, Helm ecosystem, or multi-cloud. <strong>Choose Swarm</strong> if: small to medium workload, team already knows Docker Compose (same syntax), want minimal ops overhead. Swarm is built into Docker, requires zero extra setup. Learning curve: Swarm ~1 week, Kubernetes 4-8 weeks. Kubernetes has a much larger ecosystem — if you'll need Helm, Istio, Argo, or custom operators, start there.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Amazon ECS vs Kubernetes — which is better?<span class="faq-arrow">&#9660;</span></button>
+        <div class="faq-a"><strong>Amazon ECS</strong> — simpler, no control plane to manage, deep AWS integration (ALB, IAM roles per task, CloudWatch). Best if you're fully AWS. No per-cluster cost. ECS on Fargate is fully serverless — no node management. <strong>Kubernetes (EKS)</strong> — more portable (runs anywhere), larger ecosystem, steeper learning curve, $0.10/hr control plane cost. Choose ECS if: you're AWS-only and want simplicity. Choose EKS if: you need Kubernetes ecosystem (Helm, Argo, Istio) or plan multi-cloud portability.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What is k3s and when should I use it?<span class="faq-arrow">&#9660;</span></button>
+        <div class="faq-a">k3s is a lightweight Kubernetes distribution by Rancher (CNCF project). It's a single ~70MB binary — removes optional and legacy features, uses SQLite instead of etcd by default. Perfect for: edge computing, IoT (runs on Raspberry Pi), CI/CD environments, development, and resource-constrained nodes (512MB RAM minimum). Fully Kubernetes-compatible — same kubectl, Helm charts work without changes. k3s is Kubernetes, not a subset — it passes the CNCF conformance tests.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="sec-head">
+      <span class="sec-label">Container comparison tools</span>
+      <span class="sec-rule"></span>
+    </div>
+    <div class="subtools-grid">
+      <a href="k8s-vs-swarm/" class="stl"><p class="stl-eye">vs //</p><span class="stl-name">Kubernetes vs Swarm</span></a>
+      <a href="podman-vs-docker/" class="stl"><p class="stl-eye">vs //</p><span class="stl-name">Podman vs Docker</span></a>
+      <a href="helm-vs-kustomize/" class="stl"><p class="stl-eye">vs //</p><span class="stl-name">Helm vs Kustomize</span></a>
+      <a href="k8s-vs-serverless/" class="stl"><p class="stl-eye">vs //</p><span class="stl-name">Kubernetes vs Serverless</span></a>
+      <a href="containerd-vs-docker/" class="stl"><p class="stl-eye">vs //</p><span class="stl-name">containerd vs Docker</span></a>
+    </div>
+  </section>
+
+  <div class="tag-cloud">
+    <span class="tag">container orchestration comparison</span>
+    <span class="tag">container platform comparison</span>
+    <span class="tag">docker orchestration tools comparison</span>
+    <span class="tag">kubernetes vs docker swarm</span>
+    <span class="tag">kubernetes vs nomad</span>
+    <span class="tag">ecs vs kubernetes</span>
+    <span class="tag">k3s vs kubernetes</span>
+    <span class="tag">openshift vs kubernetes</span>
+    <span class="tag">container orchestration tools 2025</span>
+    <span class="tag">best container platform</span>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <p>container-orchestration-comparison &middot; k8s &middot; swarm &middot; nomad &middot; ecs &middot; 2025</p>
+    <p>docker &middot; kubernetes &middot; k3s &middot; openshift &middot; rancher &middot; github pages</p>
+  </div>
+</footer>
+
+<script>
+var PLATFORMS = [
+  {
+    name: 'Kubernetes', color: '#326ce5',
+    scalability: { text: 'Unlimited — 5000+ nodes officially', badge: 'b-top', bl: 'UNLIMITED' },
+    complexity:  { text: 'Very high — steep learning curve', badge: 'b-hard', bl: 'HARD' },
+    cost:        { text: 'Free (self-hosted). EKS: $0.10/hr + nodes', badge: 'b-mid', bl: 'MODERATE' },
+    security:    { text: 'RBAC, NetworkPolicy, PodSecurity, Secrets, mTLS', badge: 'b-top', bl: 'ENTERPRISE' },
+    ha:          { text: '99.99% with managed (EKS/GKE). Self-hosted: depends', badge: 'b-top', bl: 'EXCELLENT' },
+    ecosystem:   { text: 'Largest — Helm, Argo, Istio, Prometheus, 10k+ operators', badge: 'b-top', bl: 'MASSIVE' }
+  },
+  {
+    name: 'Docker Swarm', color: '#0db7ed',
+    scalability: { text: 'Up to ~1000 nodes. Not for massive scale', badge: 'b-good', bl: 'MEDIUM' },
+    complexity:  { text: 'Low — same syntax as docker-compose', badge: 'b-top', bl: 'EASY' },
+    cost:        { text: 'Free. Built into Docker Engine', badge: 'b-top', bl: 'FREE' },
+    security:    { text: 'TLS between nodes, secrets management. Less than K8s', badge: 'b-mid', bl: 'BASIC+' },
+    ha:          { text: 'Good with manager replication. Less mature than K8s', badge: 'b-good', bl: 'GOOD' },
+    ecosystem:   { text: 'Small — declining. Docker Compose compatible', badge: 'b-mid', bl: 'LIMITED' }
+  },
+  {
+    name: 'HashiCorp Nomad', color: '#00ca8e',
+    scalability: { text: 'Up to 10,000+ nodes. Multi-region native', badge: 'b-top', bl: 'LARGE' },
+    complexity:  { text: 'Medium — simpler than K8s, single binary', badge: 'b-good', bl: 'MODERATE' },
+    cost:        { text: 'Free OSS. Enterprise paid. No control plane cost', badge: 'b-good', bl: 'LOW' },
+    security:    { text: 'ACL, mTLS via Consul, Vault integration for secrets', badge: 'b-good', bl: 'STRONG' },
+    ha:          { text: 'Multi-region, multi-datacenter native. Very reliable', badge: 'b-top', bl: 'EXCELLENT' },
+    ecosystem:   { text: 'HashiCorp stack (Consul, Vault, Terraform). Growing', badge: 'b-good', bl: 'GROWING' }
+  },
+  {
+    name: 'Amazon ECS', color: '#ff9900',
+    scalability: { text: 'Auto Scaling natively. Fargate: serverless containers', badge: 'b-top', bl: 'AUTO' },
+    complexity:  { text: 'Medium — simpler than EKS. AWS console friendly', badge: 'b-good', bl: 'MODERATE' },
+    cost:        { text: 'No control plane cost. Pay for EC2/Fargate only', badge: 'b-top', bl: 'EFFICIENT' },
+    security:    { text: 'IAM roles per task, VPC, Security Groups, Secrets Mgr', badge: 'b-top', bl: 'AWS-NATIVE' },
+    ha:          { text: 'Multi-AZ, auto-replace unhealthy tasks. Managed HA', badge: 'b-top', bl: 'MANAGED' },
+    ecosystem:   { text: 'AWS only. No Helm. ALB, CloudWatch, ECR native', badge: 'b-mid', bl: 'AWS-ONLY' }
+  },
+  {
+    name: 'OpenShift', color: '#ee0000',
+    scalability: { text: 'Enterprise K8s scale. Tested to 2000+ nodes', badge: 'b-top', bl: 'ENTERPRISE' },
+    complexity:  { text: 'High — K8s + Red Hat layers. Opinionated', badge: 'b-hard', bl: 'HIGH' },
+    cost:        { text: 'Paid subscription. Red Hat support included', badge: 'b-hard', bl: 'EXPENSIVE' },
+    security:    { text: 'SCC, built-in compliance (FIPS, HIPAA, FedRAMP)', badge: 'b-top', bl: 'COMPLIANCE' },
+    ha:          { text: 'Managed HA with Red Hat SLA. Enterprise support', badge: 'b-top', bl: 'SLA-BACKED' },
+    ecosystem:   { text: 'K8s-compatible + Operator Hub + Developer Console', badge: 'b-top', bl: 'FULL' }
+  },
+  {
+    name: 'k3s', color: '#ffd700',
+    scalability: { text: 'Up to 1000+ nodes. K8s-compatible', badge: 'b-good', bl: 'MEDIUM' },
+    complexity:  { text: 'Low — single binary, simpler than full K8s', badge: 'b-good', bl: 'LOWER' },
+    cost:        { text: 'Free. 70MB binary. Minimal resources', badge: 'b-top', bl: 'FREE/CHEAP' },
+    security:    { text: 'Full K8s RBAC, NetworkPolicy. Less battle-tested', badge: 'b-good', bl: 'K8S-LEVEL' },
+    ha:          { text: 'HA mode with embedded etcd or external DB', badge: 'b-good', bl: 'GOOD' },
+    ecosystem:   { text: 'Full Kubernetes compatibility — all Helm charts work', badge: 'b-top', bl: 'K8S-COMPAT' }
+  },
+  {
+    name: 'Rancher', color: '#0075a8',
+    scalability: { text: 'Manages multiple K8s clusters. Enterprise scale', badge: 'b-top', bl: 'MULTI-K8S' },
+    complexity:  { text: 'Medium — GUI over K8s. Simplifies multi-cluster', badge: 'b-good', bl: 'MANAGED' },
+    cost:        { text: 'Free OSS (SUSE). Enterprise paid', badge: 'b-good', bl: 'OSS/PAID' },
+    security:    { text: 'Multi-cluster RBAC, Policy Manager, CIS benchmarks', badge: 'b-top', bl: 'STRONG' },
+    ha:          { text: 'Manages HA for downstream K8s clusters', badge: 'b-top', bl: 'EXCELLENT' },
+    ecosystem:   { text: 'Full K8s ecosystem + Rancher App Catalog', badge: 'b-top', bl: 'FULL' }
+  },
+  {
+    name: 'Docker Compose', color: '#1d63ed',
+    scalability: { text: 'Single host only. Not for production clusters', badge: 'b-no', bl: 'SINGLE HOST' },
+    complexity:  { text: 'Simplest — familiar YAML syntax', badge: 'b-top', bl: 'EASIEST' },
+    cost:        { text: 'Free. Bundled with Docker Desktop', badge: 'b-top', bl: 'FREE' },
+    security:    { text: 'Basic — no RBAC, no multi-host networking', badge: 'b-no', bl: 'MINIMAL' },
+    ha:          { text: 'No HA. Single node = single point of failure', badge: 'b-no', bl: 'NONE' },
+    ecosystem:   { text: 'Huge — docker-compose.yml is standard. Dev staple', badge: 'b-top', bl: 'DEV STANDARD' }
+  }
+];
+
+var ALL_CATS = ['scalability', 'complexity', 'cost', 'security', 'ha', 'ecosystem'];
+var currentFilter = 'all';
+
+function renderTable() {
+  var tbody = document.getElementById('cmpBody');
+  tbody.innerHTML = '';
+  PLATFORMS.forEach(function(p) {
+    var tr = document.createElement('tr');
+    var tdP = document.createElement('td');
+    var div = document.createElement('div');
+    div.className = 'tool-cell';
+    var dot = document.createElement('span');
+    dot.className = 't-dot';
+    dot.style.background = p.color;
+    var name = document.createElement('span');
+    name.className = 't-name';
+    name.style.color = p.color;
+    name.textContent = p.name;
+    div.appendChild(dot); div.appendChild(name);
+    tdP.appendChild(div);
+    tr.appendChild(tdP);
+
+    ALL_CATS.forEach(function(cat) {
+      var d = p[cat];
+      var td = document.createElement('td');
+      td.dataset.cat = cat;
+      if (d) {
+        var badge = document.createElement('span');
+        badge.className = 'badge ' + d.badge;
+        badge.textContent = d.bl;
+        var sm = document.createElement('span');
+        sm.style.cssText = 'font-size:10px;color:var(--text-muted);display:block;margin-top:3px;line-height:1.4;';
+        sm.textContent = d.text;
+        td.appendChild(badge);
+        td.appendChild(sm);
+      }
+      tr.appendChild(td);
+    });
+
+    tbody.appendChild(tr);
+  });
+  applyFilter(currentFilter);
+}
+
+function applyFilter(cat) {
+  currentFilter = cat;
+  var ths = document.querySelectorAll('.cmp-table th[data-cat]');
+  var tds = document.querySelectorAll('.cmp-table td[data-cat]');
+  ths.forEach(function(th) { th.style.display = (cat === 'all' || th.dataset.cat === cat) ? '' : 'none'; });
+  tds.forEach(function(td) { td.style.display = (cat === 'all' || td.dataset.cat === cat) ? '' : 'none'; });
+}
+
+function filterTable(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  applyFilter(cat);
+}
+
+var BENCHMARKS = {
+  startup: {
+    label: 'Cluster Startup Time (minutes to first running workload) — lower is better',
+    note: 'Single-node or small cluster setup time from scratch',
+    lower: true,
+    items: [
+      { name: 'Docker Compose', val: 2,   color: '#1d63ed', display: '~2 min' },
+      { name: 'Docker Swarm',   val: 5,   color: '#0db7ed', display: '~5 min' },
+      { name: 'k3s',            val: 5,   color: '#ffd700', display: '~5 min' },
+      { name: 'Amazon ECS',     val: 10,  color: '#ff9900', display: '~10 min' },
+      { name: 'Nomad',          val: 10,  color: '#00ca8e', display: '~10 min' },
+      { name: 'Kubernetes',     val: 30,  color: '#326ce5', display: '~30 min (self-hosted)' },
+      { name: 'Rancher',        val: 45,  color: '#0075a8', display: '~45 min' },
+      { name: 'OpenShift',      val: 60,  color: '#ee0000', display: '~60+ min' }
+    ]
+  },
+  overhead: {
+    label: 'Control Plane Resource Overhead (MB RAM) — lower is better',
+    note: 'Memory used by the orchestrator itself, not workloads',
+    lower: true,
+    items: [
+      { name: 'Docker Compose', val: 50,   color: '#1d63ed', display: '~50MB' },
+      { name: 'k3s',            val: 512,  color: '#ffd700', display: '~512MB' },
+      { name: 'Docker Swarm',   val: 100,  color: '#0db7ed', display: '~100MB' },
+      { name: 'Nomad',          val: 256,  color: '#00ca8e', display: '~256MB' },
+      { name: 'Amazon ECS',     val: 0,    color: '#ff9900', display: '0MB (managed)' },
+      { name: 'Kubernetes',     val: 2048, color: '#326ce5', display: '~2GB (3 master nodes)' },
+      { name: 'Rancher',        val: 4096, color: '#0075a8', display: '~4GB (Rancher + K8s)' },
+      { name: 'OpenShift',      val: 8192, color: '#ee0000', display: '~8GB (full stack)' }
+    ]
+  },
+  scale: {
+    label: 'Maximum Practical Scale (worker nodes) — higher is better',
+    note: 'Tested or documented maximum for production use',
+    lower: false,
+    items: [
+      { name: 'Docker Compose', val: 1,     color: '#1d63ed', display: '1 host' },
+      { name: 'Docker Swarm',   val: 1000,  color: '#0db7ed', display: '~1000 nodes' },
+      { name: 'k3s',            val: 1000,  color: '#ffd700', display: '~1000 nodes' },
+      { name: 'Amazon ECS',     val: 5000,  color: '#ff9900', display: '5000+ tasks' },
+      { name: 'Nomad',          val: 10000, color: '#00ca8e', display: '10,000+ nodes' },
+      { name: 'Kubernetes',     val: 5000,  color: '#326ce5', display: '5000+ nodes' },
+      { name: 'Rancher',        val: 5000,  color: '#0075a8', display: 'Multi-cluster' },
+      { name: 'OpenShift',      val: 2000,  color: '#ee0000', display: '2000+ nodes' }
+    ]
+  },
+  learning: {
+    label: 'Learning Curve (weeks to productive) — lower is better',
+    note: 'Weeks for an experienced developer to become productive',
+    lower: true,
+    items: [
+      { name: 'Docker Compose', val: 0.5, color: '#1d63ed', display: '~3 days' },
+      { name: 'Docker Swarm',   val: 1,   color: '#0db7ed', display: '~1 week' },
+      { name: 'Amazon ECS',     val: 2,   color: '#ff9900', display: '~2 weeks' },
+      { name: 'k3s',            val: 3,   color: '#ffd700', display: '~3 weeks' },
+      { name: 'Nomad',          val: 3,   color: '#00ca8e', display: '~3 weeks' },
+      { name: 'Kubernetes',     val: 6,   color: '#326ce5', display: '4-8 weeks' },
+      { name: 'Rancher',        val: 4,   color: '#0075a8', display: '~4 weeks' },
+      { name: 'OpenShift',      val: 8,   color: '#ee0000', display: '6-10 weeks' }
+    ]
+  }
+};
+
+function renderBench(key) {
+  var bench = BENCHMARKS[key];
+  var body = document.getElementById('benchBody');
+  body.innerHTML = '';
+
+  var items = bench.items.slice();
+  items.sort(function(a, b) { return bench.lower ? a.val - b.val : b.val - a.val; });
+  var maxVal = Math.max.apply(null, items.map(function(i) { return i.val; }));
+  var minVal = Math.min.apply(null, items.map(function(i) { return i.val; }));
+
+  var note = document.createElement('div');
+  note.style.cssText = 'font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-bottom:14px;';
+  note.textContent = bench.label + ' · ' + bench.note;
+  body.appendChild(note);
+
+  items.forEach(function(item, idx) {
+    var div = document.createElement('div');
+    div.className = 'bench-item';
+    var hdr = document.createElement('div');
+    hdr.className = 'bench-header';
+    var nm = document.createElement('span');
+    nm.className = 'bench-name';
+    nm.style.color = item.color;
+    nm.textContent = item.name;
+    var vl = document.createElement('span');
+    vl.className = 'bench-val';
+    vl.textContent = item.display;
+    hdr.appendChild(nm); hdr.appendChild(vl);
+    var track = document.createElement('div');
+    track.className = 'bench-track';
+    var fill = document.createElement('div');
+    fill.className = 'bench-fill';
+    fill.style.background = item.color;
+    fill.style.width = '0%';
+
+    var pct;
+    var range = maxVal - minVal || 1;
+    if (bench.lower) {
+      pct = item.val === 0 ? 95 : (1 - (item.val - minVal) / range) * 88 + 6;
+    } else {
+      pct = (item.val / maxVal) * 90 + 6;
+    }
+
+    track.appendChild(fill);
+    div.appendChild(hdr);
+    div.appendChild(track);
+    body.appendChild(div);
+
+    setTimeout(function(f, p) { return function() { f.style.width = p + '%'; }; }(fill, pct), 80 + idx * 55);
+  });
+}
+
+function showBench(key, btn) {
+  document.querySelectorAll('.bench-tab').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderBench(key);
+}
+
+// FINDER LOGIC
+var RECOMMENDATIONS = {
+  'solo-tiny-simplicity': { winner: 'Docker Compose', body: 'For a solo developer running a small number of containers, Docker Compose is the clear winner. Zero overhead, no cluster to manage, and your docker-compose.yml just works.', also: 'Also consider: Docker Swarm if you need basic multi-host.' },
+  'solo-tiny-cost':       { winner: 'Docker Compose', body: 'Lowest possible cost — free, runs on a single $5/month VPS. No control plane overhead.', also: 'Also consider: k3s on a cheap VPS for K8s compatibility.' },
+  'solo-tiny-aws':        { winner: 'Amazon ECS + Fargate', body: 'Fargate handles a few containers on AWS with zero node management. Pay only for what you run. No control plane cost.', also: 'Alternative: ECS on EC2 for more control.' },
+  'small-small-simplicity': { winner: 'Docker Swarm', body: 'Docker Swarm handles 10-50 services with almost no learning curve. Same docker-compose.yml syntax. Built into Docker, no extra software.', also: 'If AWS-native: ECS. If K8s ecosystem needed: k3s.' },
+  'medium-medium-scalability': { winner: 'Kubernetes (managed)', body: 'Use EKS, GKE, or AKS — managed Kubernetes removes control plane ops. Horizontal Pod Autoscaling handles variable traffic automatically.', also: 'Alternatives: Amazon ECS (simpler, AWS-only), Nomad (heterogeneous workloads).' },
+  'large-large-enterprise': { winner: 'OpenShift or Rancher', body: 'OpenShift for Red Hat/compliance requirements. Rancher for multi-cluster Kubernetes management across clouds.', also: 'Also: EKS/GKE with enterprise support contracts.' },
+  'edge':  { winner: 'k3s', body: 'k3s is purpose-built for edge and IoT. Runs on Raspberry Pi (512MB RAM), single binary, full K8s compatibility, all Helm charts work.', also: 'Nomad is also excellent for edge — lighter still.' }
+};
+
+function findPlatform() {
+  var team     = document.getElementById('teamSel').value;
+  var scale    = document.getElementById('scaleSel').value;
+  var priority = document.getElementById('prioritySel').value;
+
+  var winner, body, also;
+
+  if (priority === 'edge') {
+    winner = 'k3s'; body = 'k3s is purpose-built for edge, IoT, and resource-constrained environments. Single 70MB binary, runs on Raspberry Pi (512MB RAM), full Kubernetes compatibility — all Helm charts work without modification.'; also = 'Also consider: HashiCorp Nomad for heterogeneous edge workloads (containers + binaries).';
+  } else if (priority === 'enterprise') {
+    winner = 'OpenShift (Red Hat) or Rancher'; body = 'OpenShift provides enterprise Kubernetes with built-in compliance (FIPS, HIPAA, FedRAMP), developer console, and Red Hat support. Rancher is better for managing multiple Kubernetes clusters across cloud providers.'; also = 'Alternative: Managed Kubernetes (EKS/GKE/AKS) with enterprise support contracts.';
+  } else if (priority === 'aws') {
+    winner = 'Amazon ECS'; body = 'ECS is the simplest AWS-native container platform. No control plane cost, deep ALB/IAM/CloudWatch integration, Fargate for serverless containers. EKS (managed Kubernetes) if you need the K8s ecosystem.'; also = 'If you need Helm/Argo/Istio: use EKS instead of ECS.';
+  } else if (scale === 'tiny' || scale === 'small') {
+    if (priority === 'simplicity' || team === 'solo' || team === 'small') {
+      if (scale === 'tiny') {
+        winner = 'Docker Compose'; body = 'For a small number of containers, Docker Compose is the simplest and cheapest solution. No cluster to manage, zero learning curve if you know Docker. Run on a single server.'; also = 'Need multi-host? Docker Swarm uses the same syntax with minimal changes.';
+      } else {
+        winner = 'Docker Swarm'; body = 'Swarm handles 10-50 services with almost zero learning curve. Uses familiar docker-compose.yml syntax. Built into Docker — no extra software. Good choice before committing to Kubernetes complexity.'; also = 'Alternative: k3s for full Kubernetes compatibility at small scale.';
+      }
+    } else if (priority === 'cost') {
+      winner = 'k3s'; body = 'k3s gives you full Kubernetes for ~$5-10/month on a VPS. No managed control plane cost. Single binary, minimal overhead.'; also = 'Cheapest of all: Docker Compose on a single VPS ($5/month).';
+    } else {
+      winner = 'k3s'; body = 'k3s provides full Kubernetes compatibility with minimal resources. Good balance of simplicity and power.'; also = 'Alternative: Docker Swarm for even simpler ops.';
+    }
+  } else if (scale === 'medium' || scale === 'large') {
+    if (priority === 'simplicity') {
+      winner = 'Managed Kubernetes (EKS/GKE/AKS)'; body = 'At medium to large scale, managed Kubernetes removes control plane ops. EKS for AWS, GKE for GCP, AKS for Azure. More complex than Swarm but the ecosystem pays off at scale.'; also = 'Alternative: Amazon ECS (simpler, AWS-only, no Helm).';
+    } else if (priority === 'cost') {
+      winner = 'HashiCorp Nomad'; body = 'Nomad has no managed control plane cost, handles 10,000+ nodes, and is simpler than Kubernetes. Free open source. Especially cost-effective for heterogeneous workloads (containers + binaries).'; also = 'Alternative: Amazon ECS Fargate (no node cost, pay-per-task).';
+    } else {
+      winner = 'Kubernetes'; body = 'At this scale, Kubernetes is the industry standard. Use managed (EKS/GKE/AKS) to reduce ops burden. HPA, network policies, RBAC, and the Helm ecosystem justify the complexity.'; also = 'For enterprise compliance: OpenShift. For multi-cluster: Rancher.';
+    }
+  } else {
+    winner = 'Kubernetes'; body = 'Kubernetes is the safe default for production workloads. Use a managed offering to reduce operational burden.'; also = 'Use the filters above to narrow down based on your priorities.';
+  }
+
+  document.getElementById('recWinner').textContent = 'Recommended: ' + winner;
+  document.getElementById('recBody').textContent = body;
+  document.getElementById('recAlso').textContent = also;
+  document.getElementById('recBox').classList.add('show');
+}
+
+function toggleFaq(btn) {
+  btn.parentElement.classList.toggle('open');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  renderTable();
+  renderBench('startup');
+  document.getElementById('findBtn').addEventListener('click', findPlatform);
+});
+</script>
 
 </body>
 </html>
